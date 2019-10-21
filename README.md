@@ -2,6 +2,33 @@
 
 Write from memory after read [shardmap](https://github.com/tidwall/shardmap).
 
+# Usage
+
+```golang
+var m shardmap.Map //var m = shardmap.New(10000)
+
+m.Set("foo", "bar")
+m.Get("foo")
+m.Delete("foo")
+
+m.SetAccept("foo", "bar", func(prev interface{}, replaced bool) bool {
+    return true
+})
+
+m.DeleteAccept("foo", func(prev interface{}, replaced bool) bool {
+    return true
+})
+
+m.Range(func(key string, value interface{}) bool {
+    fmt.Println(key, value)
+    return true
+})
+
+m.Clear()
+
+fmt.Println(m.Len()) //0
+```
+
 # Performance
 
 ```cassandraql
